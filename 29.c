@@ -31,6 +31,9 @@ printf("current scheduling is SCHED_RR\n");
 else{
 printf("unknown scheduling policy");
 }
+
+
+
 //changing schedulin policy:
 param.sched_priority = 20;  // Set a new priority
     if (sched_setscheduler(pid, SCHED_RR, &param) == -1) {
@@ -43,18 +46,18 @@ param.sched_priority = 20;  // Set a new priority
      perror("error: ");
     }
 
-    // Print the final scheduling policy
-    //print_policy(policy);
 }
 
 
 /*===========================================================================
 OUTPUT:
 
-aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ ./a.out 
+aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ cc 29.c
+aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ sudo ./a.out
+[sudo] password for aayushi312000: 
 current scheduling is SCHED_OTHER
-sched_setscheduler: Operation not permitted
 Scheduling policy changed to SCHED_RR with priority 20
+
 =============================================================================*/
 
 

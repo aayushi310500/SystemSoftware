@@ -17,6 +17,8 @@ Date: 28th Aug, 2024.
 #include<fcntl.h>
 
 
+//--------------------------------------------------read ticket(readlock) ------------------------------------------------
+
 void read_ticket(){
 struct {
 int ticket_no;
@@ -44,6 +46,8 @@ printf("unlocked\n");
 printf("done..");
 close(fd);
 }
+
+//--------------------------------------------------book ticket(writelock) ------------------------------------------------
 
 
 void book_ticket(){
@@ -84,6 +88,8 @@ close(fd);
 }
 
 
+
+
 int main(){
 int choice;
 printf("1.book ticket.\n");
@@ -102,6 +108,8 @@ printf("enter valid choice:\n");
 break;
 }
 }
+
+
 
 /*===========================================================================
 OUTPUT:

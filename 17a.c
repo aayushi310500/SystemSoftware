@@ -7,6 +7,8 @@ Description : Write a program to simulate online ticket reservation. Implement w
 Date: 28th Aug, 2024.
 ============================================================================
 */
+
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
@@ -24,6 +26,8 @@ read(fd,&db,sizeof(fd));
 printf("Ticket_no: %d\n",db.ticket_no);
 close(fd);
 }
+
+
 
 /*===========================================================================
 OUTPUT: STORING TICKET NO AND EXIT.

@@ -52,13 +52,9 @@ close(fd1);
 
 /*===========================================================================
 OUTPUT:
-lseek(fd1,0,SEEK_SET);
-char buff[1024];
-int data;
-while((data=read(fd1,buff,sizeof(buff)))>0){
-  int t=write(1,buff,data);
-if(t ==-1){
- perror("error:");
-}
-}
+aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ cc 22.c
+aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ ./a.out fork.txt
+writing by parent
+writing by child
+
 =============================================================================*/

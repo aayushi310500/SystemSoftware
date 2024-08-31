@@ -51,6 +51,8 @@ if (execvp("ls", argv) == -1) {
  perror("error:");
 }
 }
+
+
  int main(){
 int choice;
   printf("Choose which exec function to use to run ls -Rl:\n");
@@ -152,6 +154,7 @@ total 264
 -rw-rw-r-- 1 aayushi312000 aayushi312000  1809 Aug 30 17:02 type_of_file_p14.c
 -rw-rw-r-- 1 aayushi312000 aayushi312000  2655 Aug 30 20:26 waitpid_p25.c
 -rw-rw-r-- 1 aayushi312000 aayushi312000  1598 Aug 30 19:43 zombie_p23.c
+
 
 
 

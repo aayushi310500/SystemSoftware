@@ -31,7 +31,10 @@ int main(int argc, char const *argv[])
 
     ans = select(1, &rfds, NULL, NULL, &t);
 
-    if(ans==-1) perror("Something Went Wrong...");
+    if(ans<0)
+    {
+    perror("error: ");
+    }
     else if(ans>0){
         printf("There is input in these 10 seconds\n");
     }
@@ -45,9 +48,15 @@ int main(int argc, char const *argv[])
 
 /*===========================================================================
 OUTPUT:
-aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ cc p_13.c
+
 aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ ./a.out 
-There is NO input in these 10 seconds
+hii There is NO input in these 10 seconds
+aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ ./a.out 
+hiiThere is NO input in these 10 seconds
+aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ ./a.out 
+hii
+There is input in these 10 seconds
+
 =============================================================================*/
 
 

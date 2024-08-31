@@ -3,10 +3,12 @@
 Name : 16b.c
 Author : Prajapati Aayushi Sadashivbhai
 Description :Write a program to perform mandatory locking.
-              a. Implement read lock
+              b. Implement read lock
 Date: 28th Aug, 2024.
 ============================================================================
 */
+
+
 
 
 #include<stdio.h>
@@ -44,6 +46,8 @@ fcntl(fd,F_SETLK,&lock);
 printf("done\n");
 
 }
+
+
 
 
 /*===========================================================================

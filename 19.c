@@ -24,13 +24,13 @@ for(int i=0;i<=10000;i++){
 }
 end=rdtsc();
 nano = (end-start)/2.09;
-printf("the functiom takes %d nano sec \n",nano); 
+printf("the function takes %d nano sec \n",nano); 
 }
 
 /*===========================================================================
 OUTPUT:
 aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ cc timestamp_p19.c
 aayushi312000@aayushi312000-81WB:~/Documents/cprograms$ ./a.out
-the functiom takes 2353406 nano sec 
+the function takes 2353406 nano sec 
 
 =============================================================================*/

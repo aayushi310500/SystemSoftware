@@ -39,7 +39,7 @@ aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./a.out
 Caught Signal with signal number as : 2
 ctrl+c is encountered
 aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ 
-
+  
 
 ========================================================================================================
 */

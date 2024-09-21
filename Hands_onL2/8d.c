@@ -1,6 +1,6 @@
 /*
 ============================================================================
-Name : 8b.c
+Name : 8d.c
 Author : Prajapati Aayushi Sadashivbhai
 Description : Write a separate program using signal system call to catch the following signals.
               d. SIGALRM (use alarm system call)

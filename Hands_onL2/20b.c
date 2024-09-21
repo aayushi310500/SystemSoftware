@@ -1,6 +1,6 @@
 /*
 ============================================================================
-Name : 20.c
+Name : 20b.c
 Author : Prajapati Aayushi Sadashivbhai
 Description : Write two programs so that both can communicate by FIFO -Use one way communication.(read)
 Date: 20/09/2024

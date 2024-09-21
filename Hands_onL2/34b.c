@@ -2,7 +2,7 @@
 ============================================================================
 Name : 34b.c
 Author : Prajapati Aayushi Sadashivbhai
-Description : Write a program to communicate between two machines using socket. (Server)            
+Description : Write a program to communicate between two machines using socket. (client)            
 Date: 21/09/2024
 ============================================================================
 */
@@ -21,86 +21,68 @@ Date: 21/09/2024
     5. Start communicating -> `write` to and `read` from connectionfd
 */
 
-#include <sys/types.h>  
-#include <sys/socket.h> 
-#include <netinet/ip.h> 
-#include <stdio.h>      
-#include <unistd.h>     
 
-void main()
-{
-    int socket_fd, connection_fd;
-    int status;
-    int clientSize;
 
-    struct sockaddr_in address, client;
-    char buff[100];
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/ip.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <arpa/inet.h>
 
+#define PORT 8080
+#define BUFFER_SIZE 1024
+
+int main() {
+    int socket_fd;
+    struct sockaddr_in server_addr;
+    char buffer[BUFFER_SIZE];
+
+    // Create a socket
     socket_fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (socket_fd == -1)
-    {
-        perror("Error :");
+    if (socket_fd == -1) {
+        perror("Socket creation failed:");
         exit(1);
     }
-    printf("Server side socket successfully created!\n");
 
-    address.sin_addr.s_addr = htonl(INADDR_ANY);
-    address.sin_family = AF_INET;
-    address.sin_port = htons(8080);
+    // Define the server address
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_port = htons(PORT);
+    server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");  // Connect to localhost
 
-    status = bind(socket_fd, (struct sockaddr *)&address, sizeof(address));
-    if (status == -1)
-    {
-        perror("Error :");
+    // Connect to the server
+    if (connect(socket_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) == -1) {
+        perror("Connection to server failed:");
+        close(socket_fd);
         exit(1);
     }
-    printf("Binding to socket was successful!\n");
+    printf("Connected to the server.\n");
 
-    status = listen(socket_fd, 2);
-    if (status == -1)
-    {
-        perror("Error :");
+    // Read the welcome message from the server
+    int bytes_read = read(socket_fd, buffer, BUFFER_SIZE - 1);
+    if (bytes_read < 0) {
+        perror("Error reading from server:");
+        close(socket_fd);
         exit(1);
     }
-    printf("Now listening for connections on a socket!\n");
-    while (1)
-    {
-        clientSize = (int)sizeof(client);
-        connection_fd = accept(socket_fd, (struct sockaddr *)&client, &clientSize);
-        if (connection_fd == -1)
-            perror("Error :");
-        else
-        {
+    buffer[bytes_read] = '\0';  // Null-terminate the string
+    printf("Server: %s\n", buffer);
 
-            // ========================= Server - Client communication =================
+    // Send a message to the server
+    printf("Enter message to send to server: ");
+    fgets(buffer, BUFFER_SIZE, stdin);
+    write(socket_fd, buffer, strlen(buffer));
 
-            if (fork() == 0)
-            {
-                // Child
-                int wb = write(connection_fd, "I'm the server!", 15);
-                if (wb == -1)
-                    perror("Error :");
-                else
-                    printf("Data sent to client!\n");
+    // Close the socket
+    close(socket_fd);
+    printf("Connection closed with server.\n");
 
-                int rb = read(connection_fd, buff, 100);
-                if (rb == -1)
-                    perror("Error :");
-                else
-                    printf("Data from client: %s\n", buff);
-            }
-            else
-            {
-                // Parent
-                close(connection_fd);
-            }
-        }
-
-        // =======================================================================
-    }
-
-    close(socketFileDescriptor);
+    return 0;
 }
+
+
 
 
 /*
@@ -109,6 +91,18 @@ OUTPUT:
 ========================================================================================================
 /
 
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ cc 34b.c -o ./34b
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./34b
+Connected to the server.
+Server: Hello from the server!
+Enter message to send to server: hello
+Connection closed with server.
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./34b
+Connected to the server.
+Server: Hello from the server!
+Enter message to send to server: hii
+Connection closed with server.
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ 
 
 
 ========================================================================================================

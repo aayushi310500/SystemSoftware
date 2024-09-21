@@ -28,7 +28,7 @@ Date: 21/09/2024
 #include <stdio.h>      // Import for `perror` & `printf`
 #include <unistd.h>     // Import for `_exit`, `read`, `write`
 #include <pthread.h>    // Import for `pthread_create`
-
+#include <stdlib.h>
 
 void communicate(int *fd)
 {
@@ -95,7 +95,7 @@ void main()
     while (1)
     {
         clientSize = (int)sizeof(client);
-        connection_fd = accept(socketFileDescriptor, (struct sockaddr *)&client, &clientSize);
+        connection_fd = accept(socket_fd, (struct sockaddr *)&client, &clientSize);
         if (connection_fd == -1)
             perror("Error :");
         else
@@ -107,3 +107,26 @@ void main()
 
     close(socket_fd);
 }
+
+
+/*
+========================================================================================================
+OUTPUT:
+========================================================================================================
+/
+
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ cc 34d.c -o ./34d
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./34d
+Server side socket successfully created!
+Binding to socket was successful!
+Now listening for connections on a socket!
+Data sent to client!
+Data from client: I'm the client!
+Data sent to client!
+Data from client: I'm the client!
+
+
+
+
+========================================================================================================
+*/  

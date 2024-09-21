@@ -2,7 +2,7 @@
 ============================================================================
 Name : 34a.c
 Author : Prajapati Aayushi Sadashivbhai
-Description : Write a program to communicate between two machines using socket. (Client)            
+Description : Write a program to communicate between two machines using socket. (Server)            
 Date: 21/09/2024
 ============================================================================
 */
@@ -25,13 +25,42 @@ Date: 21/09/2024
 #include <unistd.h>     
 #include <stdlib.h>
 
+void handle_client(int connection_fd) {
+    char buff[100];
+    int n;
+    
+
+    // ========================= Server - Client communication =================
+
+    // Send a message to the client
+    int wb = write(connection_fd, "Hello from the server!", 22);
+    if (wb == -1)
+        perror("Error writing to client");
+    else
+        printf("Data sent to client!\n");
+
+    // Read a message from the client
+    n = read(connection_fd, buff, sizeof(buff));
+    if (n == -1)
+        perror("Error reading from client");
+    else {
+        buff[n] = '\0'; // Null-terminate the string
+        printf("Data from client: %s\n", buff);
+    }
+
+    // Close the connection after communication
+    close(connection_fd);
+}
+
+
 void main()
 {
     int socket_fd; 
     int status;      
-
-    struct sockaddr_in address; // Holds the address of the server to communicate
-
+    int connection_fd;
+    socklen_t client_len;
+    //struct sockaddr_in address; // Holds the address of the server to communicate
+    struct sockaddr_in server_address, client_address;
     char buff[100];
 
     // Create an endpoint for communicate -> here, create the client side point
@@ -42,41 +71,64 @@ void main()
         perror("Error :");
         exit(1);
     }
-    printf("Client side socket successfully created!\n");
-
+    printf("Server socket successfully created!\n");
+    
+    
     // Defined server's details
-    address.sin_addr.s_addr = htonl(INADDR_ANY);
-    address.sin_family = AF_INET;
-    address.sin_port = htons(8080);
-
-    status = connect(socket_fd, (struct sockaddr *)&address, sizeof(address));
-    if (status == -1)
-    {
-        perror("Error :");
+   
+    server_address.sin_addr.s_addr = htonl(INADDR_ANY);
+    server_address.sin_family = AF_INET;
+    server_address.sin_port = htons(8080);
+    
+     // Bind the socket to a port
+    status = bind(socket_fd, (struct sockaddr *)&server_address, sizeof(server_address));
+    if (status == -1) {
+        perror("Error binding socket");
         exit(1);
     }
-    printf("Client to server connection successfully established!\n");
+    printf("Binding to socket was successful!\n");
 
-    // ========================= Client - Server communication =================
+   
+   // Listen for incoming connections (with a backlog of 5)
+    status = listen(socket_fd, 5);
+    if (status == -1) {
+        perror("Error listening on socket");
+        exit(1);
+    }
+    printf("Server is listening on port 8080");
+   
 
-    int rb = read(socket_fd, buff, 100);
-    
-    if (rb == -1)
-        perror("Error :");
-    else
-        printf("Data from server: %s\n", buff);
 
-    iny wb = write(socket_fd, "I'm the client!", 15);
-    if (wb == -1)
-        perror("Error :");
-    else
-        printf("Data sent to server!");
-    
 
-    // =======================================================================
 
-    close(socket_fd);
+ while (1) {
+        client_len = sizeof(client_address);
+
+        // Accept a new client connection
+        connection_fd = accept(socket_fd, (struct sockaddr *)&client_address, &client_len);
+        if (connection_fd == -1) {
+            perror("Error accepting connection");
+            exit(1);
+        }
+
+        printf("Client connected!\n");
+
+        // Create a child process using fork to handle the client
+        
+        if (fork() == 0) {
+            // Child process - handles client communication
+            close(socket_fd); // Child doesn't need the listening socket
+            handle_client(connection_fd);
+            exit(1); // Child process exits after handling the client
+        } else {
+            // Parent process - continues to accept new clients
+            close(connection_fd); // Parent doesn't need the client connection socket
+        }
+    }
+
 }
+
+
 
 
 
@@ -85,6 +137,20 @@ void main()
 OUTPUT:
 ========================================================================================================
 /
+
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./34a
+Server socket successfully created!
+Binding to socket was successful!
+Server is listening on port 8080Client connected!
+Data sent to client!
+Data from client: hello
+
+Client connected!
+Data sent to client!
+Data from client: hii
+
+^C
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ 
 
 
 

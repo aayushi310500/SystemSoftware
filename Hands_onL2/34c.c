@@ -57,7 +57,7 @@ void main()
 
     // ========================= Client - Server communication =================
 
-    int rb = read(socket_fd, dataFromServer, 100);
+    int rb = read(socket_fd, buff, 100);
     
     if (rb == -1)
         perror("Error :");
@@ -68,7 +68,7 @@ void main()
     if (wb == -1)
         perror("Error:");
     else
-        printf("Data sent to server!");
+        printf("Data sent to server! press enter and exit");
 
     getchar();
     
@@ -76,3 +76,29 @@ void main()
 
     close(socket_fd);
 }
+
+
+
+/*
+========================================================================================================
+OUTPUT:
+========================================================================================================
+/
+
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ cc 34c.c -o ./34c
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./34c
+Client side socket successfully created!
+Client to server connection successfully established!
+Data from server: I'm the server!
+Data sent to server!nhj
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./34c
+Client side socket successfully created!
+Client to server connection successfully established!
+Data from server: I'm the server!
+Data sent to server!
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ 
+
+
+
+========================================================================================================
+*/  

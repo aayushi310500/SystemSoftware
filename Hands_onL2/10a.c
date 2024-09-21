@@ -27,7 +27,7 @@ void main()
     action.sa_handler = signalHandler;
     action.sa_flags = 0;
 
-    int staus=sigaction(SIGSEGV, &action, NULL);
+    int status=sigaction(SIGSEGV, &action, NULL);
     if(status==-1){
      perror("Error: ");
     }
@@ -40,3 +40,19 @@ void main()
     }
     
 }
+
+
+/*
+========================================================================================================
+OUTPUT:
+========================================================================================================
+
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ cc 10a.c
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./a.out 
+Caught Signal with signal number as : 11
+Array index out of bounds occurred. Program will now exit.
+
+========================================================================================================
+*/
+
+

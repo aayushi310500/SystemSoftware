@@ -36,3 +36,22 @@ void main()
         {sleep(5);
         printf("No ctrl+c caught.\n");}
 }
+
+
+
+/*
+========================================================================================================
+OUTPUT:
+========================================================================================================
+
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ cc 10b.c
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./a.out 
+^C
+Caught Signal with signal number as : 2
+ctrl+c is encountered
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ 
+
+
+========================================================================================================
+
+*/

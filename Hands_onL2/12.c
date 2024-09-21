@@ -15,22 +15,19 @@ Date: 20/09/2024
 
 void main()
 {
-    pid_t childPid, parentPid;
-    int killStatus; // Determines success of `kill`
+    int pid1 = fork();
 
-    childPid = fork();
-
-    if (childPid == -1)
-        perror("Error while creating child!");
-    else if (!childPid)
+    if (pid1 == -1)
+        perror("Error :");
+    else if (!pid1)
     {
-        // Child will enter this branch
+        // Child
         printf("Child PID: %d\n", getpid());
         printf("Parent PID: %d\n", getppid());
 
         sleep(10);
 
-        killStatus = kill(getppid(), SIGKILL);
+        int killStatus = kill(getppid(), SIGKILL);
 
         if (!killStatus)
         {
@@ -39,11 +36,28 @@ void main()
             printf("Child now exiting!\n");
         }
         else
-            perror("Error while killing parent!");
+            perror("Error :");
     }
     else
     {
-        // Parent will enter this branch
-        while (1);
+        // Parent 
+        while (1);//keep running unlsess it will get killed
     }
 }
+
+
+/*
+========================================================================================================
+OUTPUT:
+========================================================================================================
+
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./a.out 
+Child PID: 12819
+Parent PID: 12818
+Successfully killed parent!
+Killed
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ Child now exiting!
+
+
+========================================================================================================
+*/

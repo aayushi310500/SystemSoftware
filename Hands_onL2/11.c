@@ -20,7 +20,7 @@ void signalHandler(int signalNumber)
 
 void main()
 {
-    int status; // Determines success of `sigaction` call
+    int status;
     struct sigaction action;
 
     // Ignore SIGINT
@@ -54,3 +54,19 @@ void main()
     else
         sleep(5);
 }
+
+
+/*
+========================================================================================================
+OUTPUT:
+========================================================================================================
+
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./a.out
+Ignoring SIGINT for 5 seconds!
+^CHandling SIGINT for 5 seconds!
+^CCaught signal SIGINT (2)
+Default action for SIGINT for 5 seconds!
+
+
+========================================================================================================
+*/

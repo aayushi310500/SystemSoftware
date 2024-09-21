@@ -8,19 +8,13 @@ Date: 21/09/2024
 */
 
 
-
 /*
     1. socket() -> create an endpoint for the communication
         sockfetfd = socket(AF_INET, SOCK_STREAM, 0);
-    2. bind() -> bind a name to a socket
-        bindStatus = bind(socketfd, &socketaddr, sizeof(socketfd));
-    3. listen() -> listen for connections on a socket
-        listenStatus = listen(socketfd, 2); // backlog -> 2
-    4. accept() -> accept a connection on a socket
-        connectionfd = accept(socketfd, &socketaddr, sizeof(socketaddr), 0);
-    5. Start communicating -> `write` to and `read` from connectionfd
+    2. connect() -> initiate a connection to a socket
+        connectionStatus = connect(socketfd, &socketaddr, sizeof(socketaddr));
+    3. Start communicating -> `write` to and `read` from socketfd
 */
-
 
 
 #include <sys/types.h>

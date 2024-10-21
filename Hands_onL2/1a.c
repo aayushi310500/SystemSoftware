@@ -15,15 +15,15 @@ Date: 19/09/2024
 #include <stdio.h>
 #include<string.h>
 
+ void signalHandler(int signal_num){
+    printf("Signal Expired with signal number as : %d\n",signal_num);
+     }
+
 
 void main(int argc, char *argv[])
 {
     int timerStatus;
-    
-    void signalHandler(int signal_num){
-    printf("Signal Expired with signal number as : %d\n",signal_num);
-     }
-      //signal(SIGALRM, signalHandler);
+    signal(SIGALRM, signalHandler);
 
     struct itimerval timer;
 
@@ -59,6 +59,14 @@ void main(int argc, char *argv[])
 ========================================================================================================
 OUTPUT:
 ========================================================================================================
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ cc 1a.c
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./a.out ms
+Signal Expired with signal number as : 14
+
+^C
+aayushi312000@aayushi312000-81WB:~/MTech/SS/SystemSoftware/Hands_onL2$ ./a.out s
+Signal Expired with signal number as : 14
+
 
 ========================================================================================================
 */
